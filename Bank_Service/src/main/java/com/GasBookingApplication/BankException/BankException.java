@@ -1,24 +1,32 @@
 package com.GasBookingApplication.BankException;
 
+import java.util.Date;
+
 import org.springframework.http.HttpStatus;
 
 public class BankException {
-	private final String message;
-	private final Throwable throwable;
-	private final HttpStatus httpstatus;
-	public BankException(String message, Throwable throwable, HttpStatus httpstatus) {
+	private Date timestamp;
+
+	private String message;
+
+	private String details;
+
+	public BankException(Date timestamp, String message, String details) {
 		super();
+		this.timestamp = timestamp;
 		this.message = message;
-		this.throwable = throwable;
-		this.httpstatus = httpstatus;
+		this.details = details;
 	}
+
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
 	public String getMessage() {
 		return message;
 	}
-	public Throwable getThrowable() {
-		return throwable;
-	}
-	public HttpStatus getHttpstatus() {
-		return httpstatus;
-	}
+
+	public String getDetails() {
+		return details;
+	}	
 }

@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.GasBookingApplication.Model.ErrorDetails;
-
 @ControllerAdvice
 public class BankExceptionController extends ResponseEntityExceptionHandler {
 //	@ExceptionHandler(value= {BankNotFoundException.class})
@@ -36,8 +34,8 @@ public class BankExceptionController extends ResponseEntityExceptionHandler {
 //	    }
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ErrorDetails> handleGlobalException(Exception exception, WebRequest webRequest) {
-		ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
+	public ResponseEntity<BankException> handleGlobalException(Exception exception, WebRequest webRequest) {
+		BankException errorDetails = new BankException(new Date(), exception.getMessage(),
 				webRequest.getDescription(false));
 		return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
