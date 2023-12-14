@@ -18,4 +18,6 @@ public interface IBankService {
 
 	List<Bank> viewBanks();
 	
+	BankDto viewById(int bankId);
+	
 }

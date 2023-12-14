@@ -12,12 +12,12 @@ public interface ICustomerService {
 	
 	String updateCustomer(int customerId,CustomerDto customerDto);
 	
-	String deleteCustomer(int customerId,Customer customer);
+	String deleteCustomer(int customerId);
 	
 	List<Customer> viewCustomers();
 	
 
-	Optional<Customer> findById(int customerId);
+	CustomerDto viewById(int customerId);
 	
 	
 	

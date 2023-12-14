@@ -60,4 +60,22 @@ public class BankController {
 	}
 	
 	
+	
+	@GetMapping("/viewbank/{bankId}")
+	public ResponseEntity<BankDto> viewById(@PathVariable("bankId") int bankId) {
+		if (isValidBankId(bankId)) {
+			return ResponseEntity.ok(bankService.viewById(bankId));
+		} else {
+			return ResponseEntity.badRequest().build(); // You can customize the response accordingly
+
+		}
+
+	}
+
+	private boolean isValidBankId(int bankId) {
+		// Add your validation logic here
+		// For example, check if customerId is positive or some other condition
+		return bankId > 0;
+	}
+	
 }

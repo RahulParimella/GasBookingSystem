@@ -40,7 +40,7 @@ public class CylinderController {
 	
 
 	@PutMapping("/updatecylinder/{cylinderid}")
-	public ResponseEntity<String> updateCylinder(@PathVariable int cylinderid ,CylinderDto cylinderDto) {
+	public ResponseEntity<String> updateCylinder(@PathVariable int cylinderid ,@RequestBody CylinderDto cylinderDto) {
 		return ResponseEntity.ok(Cylinderservice.updateCylinder(cylinderid, cylinderDto));
 	}
 	
@@ -79,6 +79,23 @@ public class CylinderController {
 	public ResponseEntity<String> deleteCylinder(@PathVariable int cylinderid) {
 		
 		return ResponseEntity.ok( Cylinderservice.deleteCylinder(cylinderid));
+	}
+	
+	@GetMapping("/viewcylinder/{cylinderId}")
+	public ResponseEntity<CylinderDto> viewById(@PathVariable("cylinderId") int cylinderId) {
+		if (isValidCylinderId(cylinderId)) {
+			return ResponseEntity.ok(Cylinderservice.viewById(cylinderId));
+		} else {
+			return ResponseEntity.badRequest().build(); // You can customize the response accordingly
+
+		}
+
+	}
+
+	private boolean isValidCylinderId(int cylinderId) {
+		// Add your validation logic here
+		// For example, check if customerId is positive or some other condition
+		return cylinderId > 0;
 	}
 }
 

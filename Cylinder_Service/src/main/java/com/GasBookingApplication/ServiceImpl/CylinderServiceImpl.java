@@ -22,6 +22,8 @@ public class CylinderServiceImpl implements ICylinderService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	
+	
 //	@Override
 	public CylinderDto insertCylinder(CylinderDto cylinderDto) {
 		// TODO Auto-generated method stub
@@ -84,6 +86,26 @@ public class CylinderServiceImpl implements ICylinderService {
 			throw new CylinderNotFoundException("there is no such type");
 		}
 		return cy;
+	}
+
+
+
+	@Override
+	public CylinderDto viewById(int cylinderid) {
+		// TODO Auto-generated method stub
+		Optional<Cylinder> cylinder =cylinderRepo.findById(cylinderid);
+		if(cylinder.isPresent()) {
+			Cylinder c=cylinder.get();
+			CylinderDto cylinderDto =modelMapper.map(cylinder, CylinderDto.class);
+		
+			
+			return cylinderDto;
+
+		}
+		else {
+			throw new CylinderNotFoundException("Cylinder id not found:"+cylinderid);
+
+		}
 	}
 
 	

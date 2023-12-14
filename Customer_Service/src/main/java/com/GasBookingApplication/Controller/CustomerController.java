@@ -1,6 +1,5 @@
 package com.GasBookingApplication.Controller;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,59 +23,54 @@ import com.GasBookingApplication.Service.ICustomerService;
 @RestController
 @RequestMapping("/api")
 public class CustomerController {
-	
+
 	@Autowired
 	private ICustomerService customerService;
-	
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@PostMapping("/customer")
-	public ResponseEntity<CustomerDto> insertCustomer(@RequestBody CustomerDto customerDto){
-		return new ResponseEntity<>(customerService.insertCustomer(customerDto),HttpStatus.CREATED);
-		
+	public ResponseEntity<CustomerDto> insertCustomer(@RequestBody CustomerDto customerDto) {
+		return new ResponseEntity<>(customerService.insertCustomer(customerDto), HttpStatus.CREATED);
+
 	}
-	
+
 	@PutMapping("/updatecustomer/{customerId}")
-	public ResponseEntity<String> updateCustomer(@PathVariable int customerId,CustomerDto customerDto){
+	public ResponseEntity<String> updateCustomer(@PathVariable int customerId, CustomerDto customerDto) {
 		return ResponseEntity.ok(customerService.updateCustomer(customerId, customerDto));
-		
+
 	}
-	
+
 	@DeleteMapping("/deletecustomer/{customerId}")
-	public ResponseEntity<String> deleteCustomer(@PathVariable int customerId,Customer customer){
-		return ResponseEntity.ok(customerService.deleteCustomer(customerId, customer));
-		
+	public ResponseEntity<String> deleteCustomer(@PathVariable int customerId) {
+		return ResponseEntity.ok(customerService.deleteCustomer(customerId));
+
 	}
-	
+
 	@GetMapping("/viewcustomers")
-	//Type1
-	public ResponseEntity<List<CustomerDto>> viewCustomers(){
-		
+	// Type1
+	public ResponseEntity<List<CustomerDto>> viewCustomers() {
+
 		return ResponseEntity.ok(customerService.viewCustomers().stream()
-				.map(customer->modelMapper.map(customer, CustomerDto.class))
-				.collect(Collectors.toList()));
+				.map(customer -> modelMapper.map(customer, CustomerDto.class)).collect(Collectors.toList()));
 	}
-	
 
 	@GetMapping("/viewcustomer/{customerId}")
-	public ResponseEntity<List<CustomerDto>> viewCustomerById(@PathVariable int customerId){
-	    if (isValidCustomerId(customerId)) {
-	    	return ResponseEntity.ok(customerService.findById(customerId).stream()
-					.map(customer->modelMapper.map(customer, CustomerDto.class))
-					.collect(Collectors.toList()));
-			}else {
-		        return ResponseEntity.badRequest().body(Collections.emptyList()); // You can customize the response accordingly
+	public ResponseEntity<CustomerDto> viewCustomerById(@PathVariable int customerId) {
+		if (isValidCustomerId(customerId)) {
+			return ResponseEntity.ok(customerService.viewById(customerId));
+		} else {
+			return ResponseEntity.badRequest().build(); // You can customize the response accordingly
 
-			}
+		}
 
 	}
 
 	private boolean isValidCustomerId(int customerId) {
-	    // Add your validation logic here
-	    // For example, check if customerId is positive or some other condition
-	    return customerId > 0;
+		// Add your validation logic here
+		// For example, check if customerId is positive or some other condition
+		return customerId > 0;
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.GasBookingApplication.CylinderException;
+package com.gasbookingapplication.Exception;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class CylinderExceptionController extends ResponseEntityExceptionHandler{
+public class BookingExceptionController extends ResponseEntityExceptionHandler{
 //
 //	@ExceptionHandler(value = { CylinderNotFoundException.class })
 //	public ResponseEntity<Object> handleCylinderNotFoundException(CylinderNotFoundException ex) {
@@ -32,8 +32,8 @@ public class CylinderExceptionController extends ResponseEntityExceptionHandler{
 	
 	
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<CylinderException> handleGlobalException(Exception exception, WebRequest webRequest) {
-		CylinderException errorDetails = new CylinderException(new Date(), exception.getMessage(),
+	public ResponseEntity<BookingException> handleGlobalException(Exception exception, WebRequest webRequest) {
+		BookingException errorDetails = new BookingException(new Date(), exception.getMessage(),
 				webRequest.getDescription(false));
 		return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 	}

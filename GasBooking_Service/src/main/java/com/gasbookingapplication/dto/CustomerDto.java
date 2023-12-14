@@ -1,4 +1,4 @@
-package com.GasBookingApplication.Dto;
+package com.gasbookingapplication.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
@@ -22,12 +22,7 @@ public class CustomerDto {
 
 	private String pan;
 
-	
-	private CylinderDto cylinderDto;
 
-	private BankDto bankDto;
-	
-	private SurrenderCylinderDto surrenderDto;
 	
 	public CustomerDto() {
 		super();
@@ -78,30 +73,5 @@ public class CustomerDto {
 		this.pan = pan;
 	}
 
-	public CylinderDto getCylinderDto() {
-		return cylinderDto;
-	}
-
-	public void setCylinderDto(CylinderDto cylinderDto) {
-		this.cylinderDto = cylinderDto;
-	}
-
-	public BankDto getBankDto() {
-		return bankDto;
-	}
-
-	public void setBankDto(BankDto bankDto) {
-		this.bankDto = bankDto;
-	}
-
-	public SurrenderCylinderDto getSurrenderDto() {
-		return surrenderDto;
-	}
-
-	public void setSurrenderDto(SurrenderCylinderDto surrenderDto) {
-		this.surrenderDto = surrenderDto;
-	}
-
-	
 
 }

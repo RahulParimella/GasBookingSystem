@@ -76,6 +76,22 @@ public class BankServiceImpl implements IBankService{
 		}
 		return cylinders;
 	}
+	@Override
+	public BankDto viewById(int bankId) {
+		// TODO Auto-generated method stub
+		Optional<Bank> bank =bankRepo.findById(bankId);
+		if(bank.isPresent()) {
+			Bank c=bank.get();
+			BankDto bankDto =modelMapper.map(bank, BankDto.class);
+		
+			return bankDto;
+
+		}
+		else {
+			throw new BankNotFoundException("Bank id not found:"+bankId);
+
+		}
+	}
 
 	
 
