@@ -1,4 +1,4 @@
-package com.gasbookingapplication.dto;
+package com.GasBookingApplication.Dto;
 
 import java.time.LocalDate;
 
@@ -11,16 +11,7 @@ public class GasBookingDto {
 
 	private float bill;
 	
-	private CustomerDto customerDto;
 	
-
-	public CustomerDto getCustomerDto() {
-		return customerDto;
-	}
-
-	public void setCustomerDto(CustomerDto customerDto) {
-		this.customerDto = customerDto;
-	}
 
 	public int getGasbookingId() {
 		return gasbookingId;
@@ -54,8 +45,5 @@ public class GasBookingDto {
 		this.bill = bill;
 	}
 
-	
-
-	
 	
 }

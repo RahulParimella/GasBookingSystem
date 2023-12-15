@@ -1,5 +1,7 @@
 package com.GasBookingApplication.Dto;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -29,6 +31,10 @@ public class CustomerDto {
 	
 	private SurrenderCylinderDto surrenderDto;
 	
+	private List<GasBookingDto> gasbookingDto;
+	
+	
+
 	public CustomerDto() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -100,6 +106,14 @@ public class CustomerDto {
 
 	public void setSurrenderDto(SurrenderCylinderDto surrenderDto) {
 		this.surrenderDto = surrenderDto;
+	}
+
+	public List<GasBookingDto> getGasbookingDto() {
+		return gasbookingDto;
+	}
+
+	public void setGasbookingDto(List<GasBookingDto> gasbookingDto) {
+		this.gasbookingDto = gasbookingDto;
 	}
 
 	

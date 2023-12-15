@@ -14,9 +14,11 @@ import com.GasBookingApplication.CustomerException.CustomerNotFoundException;
 import com.GasBookingApplication.Dto.BankDto;
 import com.GasBookingApplication.Dto.CustomerDto;
 import com.GasBookingApplication.Dto.CylinderDto;
+import com.GasBookingApplication.Dto.GasBookingDto;
 import com.GasBookingApplication.Dto.SurrenderCylinderDto;
 import com.GasBookingApplication.Model.Customer;
 import com.GasBookingApplication.OpenFeign.BankClient;
+import com.GasBookingApplication.OpenFeign.BookingClient;
 import com.GasBookingApplication.OpenFeign.CylinderClient;
 import com.GasBookingApplication.OpenFeign.SurrenderClient;
 import com.GasBookingApplication.Repository.CustomerRepository;
@@ -37,6 +39,11 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
 	private SurrenderClient surrenderClient;
+	
+
+	@Autowired
+	private BookingClient bookingClient;
+	
 	@Override
 	public CustomerDto insertCustomer(CustomerDto customerDto) {
 		// TODO Auto-generated method stub
@@ -109,6 +116,12 @@ public class CustomerServiceImpl implements ICustomerService {
 			ResponseEntity<SurrenderCylinderDto> surrenderResponseEntity=surrenderClient.viewById(customerId);
 			SurrenderCylinderDto surrenderDto =surrenderResponseEntity.getBody();
 			customerDto.setSurrenderDto(surrenderDto);
+			
+			//for bookings
+			ResponseEntity<List<GasBookingDto>> bookingResponseEntity=bookingClient.viewGasBookingById(customerId);
+			List<GasBookingDto> bookingDto =bookingResponseEntity.getBody();
+			customerDto.setGasbookingDto(bookingDto);
+			
 			return customerDto;
 		} else {
 			throw new CustomerNotFoundException("Customer id not found:" + customerId);

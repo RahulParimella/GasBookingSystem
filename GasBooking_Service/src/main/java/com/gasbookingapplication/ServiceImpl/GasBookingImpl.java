@@ -1,6 +1,9 @@
 package com.gasbookingapplication.ServiceImpl;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,9 @@ public class GasBookingImpl implements GasBookingService{
 		GasBookingDto gasbookingDto1=modelMapper.map(savedgasBooking, GasBookingDto.class);
 		return gasbookingDto1;
 	}
+	
+	
+
 
 	@Override
 	public String updateGasBooking(int gasbookingId, GasBookingDto gasbookingDto) {
@@ -77,7 +83,7 @@ public class GasBookingImpl implements GasBookingService{
 			// for customer
 			ResponseEntity<CustomerDto> customerResponseEntity =customerClient.viewCustomerById(customerId);
 			CustomerDto custDto =customerResponseEntity.getBody();
-			gasbookingDto.setCustomerDto(custDto);;
+			gasbookingDto.setCustomerDto(custDto);
 			return gasbookingDto;
 
 		}
@@ -88,6 +94,48 @@ public class GasBookingImpl implements GasBookingService{
 	}
 
 
+
+	@Override
+	public List<GasBookingDto> viewGasBookingById(int customerId) {
+		// TODO Auto-generated method stub
+		Optional<GasBooking> bookings =bookingRepo.findById(customerId);
+		if(bookings.isPresent()) {
+			GasBooking b=bookings.get();
+			GasBookingDto gasbookingDto =modelMapper.map(bookings, GasBookingDto.class);
+		
+			// for customer
+//						ResponseEntity<CustomerDto> customerResponseEntity =customerClient.viewCustomerById(customerId);
+//						CustomerDto custDto =customerResponseEntity.getBody();
+//						gasbookingDto.setCustomerDto(custDto);
+			
+			return  Collections.singletonList(gasbookingDto);
+		
+
+		}
+		else {
+			throw new BookingNotFoundException("Customer id not found:"+customerId);
+
+		}
+	}
+
+	
+
+//	@Override
+//	public List<GasBookingDto> addMultipleBookings(List<GasBookingDto> gasbookingDtoList) {
+//	    // Assuming GasBookingDto is mapped to GasBooking by modelMapper
+//	    List<GasBooking> gasBookings = gasbookingDtoList.stream()
+//	            .map(dto -> modelMapper.map(dto, GasBooking.class))
+//	            .collect(Collectors.toList());
+//
+//	    List<GasBooking> savedBookings = bookingRepo.saveAll(gasBookings);
+//
+//	    // Map the saved entities back to DTOs
+//	    List<GasBookingDto> savedBookingsDto = savedBookings.stream()
+//	            .map(booking -> modelMapper.map(booking, GasBookingDto.class))
+//	            .collect(Collectors.toList());
+//
+//	    return savedBookingsDto;
+//	}
 
 
 	

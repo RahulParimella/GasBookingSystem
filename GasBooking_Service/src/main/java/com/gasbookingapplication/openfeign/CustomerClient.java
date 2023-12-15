@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.gasbookingapplication.dto.CustomerDto;
 
-@FeignClient(value="BOOKING-MICROSERVICES",url= "http://localhost:8081/api")
+@FeignClient(value="CUSTOMER-MICROSERVICES",url= "http://localhost:8081/api")
 
 public interface CustomerClient {
 	@GetMapping("/viewcustomer/{customerId}")
