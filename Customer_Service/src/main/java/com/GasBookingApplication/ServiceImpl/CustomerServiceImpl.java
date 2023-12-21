@@ -2,7 +2,6 @@ package com.GasBookingApplication.ServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +39,11 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
 	private SurrenderClient surrenderClient;
+	
 
 	@Autowired
 	private BookingClient bookingClient;
-
+	
 	@Override
 	public CustomerDto insertCustomer(CustomerDto customerDto) {
 		// TODO Auto-generated method stub
@@ -88,6 +88,16 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
+	public List<Customer> viewCustomers() {
+		// TODO Auto-generated method stub
+		List<Customer> customers = customerRepo.findAll();
+		if (customers.isEmpty()) {
+			throw new CustomerNotFoundException("hey list is empty");
+		}
+		return customers;
+	}
+
+	@Override
 	public CustomerDto viewById(int customerId) {
 		// TODO Auto-generated method stub
 		Optional<Customer> customer = customerRepo.findById(customerId);
@@ -95,43 +105,28 @@ public class CustomerServiceImpl implements ICustomerService {
 			Customer cu = customer.get();
 			CustomerDto customerDto = modelMapper.map(customer, CustomerDto.class);
 			// for cylinder
-			ResponseEntity<CylinderDto> cylinderResponseEntity = cylinderClient.viewById(customerId);
-			CylinderDto cylDto = cylinderResponseEntity.getBody();
-			customerDto.setCylinderDto(cylDto);
+			ResponseEntity<CylinderDto> cylinderResponseEntity =cylinderClient.viewById(customerId);
+			CylinderDto cylDto =cylinderResponseEntity.getBody();
+			 customerDto.setCylinderDto(cylDto);
 			// for bank
-			ResponseEntity<BankDto> bankResponseEntity = bankClient.viewById(customerId);
-			BankDto bankDto = bankResponseEntity.getBody();
-			customerDto.setBankDto(bankDto);
-			// for surrender cylinder
-			ResponseEntity<SurrenderCylinderDto> surrenderResponseEntity = surrenderClient.viewById(customerId);
-			SurrenderCylinderDto surrenderDto = surrenderResponseEntity.getBody();
+			 ResponseEntity<BankDto> bankResponseEntity =bankClient.viewById(customerId);
+				BankDto bankDto =bankResponseEntity.getBody();
+				customerDto.setBankDto(bankDto);
+				//for surrender cylinder
+			ResponseEntity<SurrenderCylinderDto> surrenderResponseEntity=surrenderClient.viewById(customerId);
+			SurrenderCylinderDto surrenderDto =surrenderResponseEntity.getBody();
 			customerDto.setSurrenderDto(surrenderDto);
-
-			// for bookings
-			ResponseEntity<List<GasBookingDto>> bookingResponseEntity = bookingClient.viewGasBookingById(customerId);
-			List<GasBookingDto> bookingDto = bookingResponseEntity.getBody();
+			
+			//for bookings
+			ResponseEntity<List<GasBookingDto>> bookingResponseEntity=bookingClient.viewGasBookingById(customerId);
+			List<GasBookingDto> bookingDto =bookingResponseEntity.getBody();
 			customerDto.setGasbookingDto(bookingDto);
-
+			
 			return customerDto;
 		} else {
 			throw new CustomerNotFoundException("Customer id not found:" + customerId);
 
 		}
-	}
-
-	@Override
-	public List<CustomerDto> viewCustomers() {
-		List<Customer> customers = customerRepo.findAll();
-
-		if (customers.isEmpty()) {
-			throw new CustomerNotFoundException("Hey, the customer list is empty");
-		}
-
-		// Use ModelMapper to map List<Customer> to List<CustomerDto>
-		List<CustomerDto> customerDtoList = customers.stream()
-				.map(customer -> modelMapper.map(customer, CustomerDto.class)).collect(Collectors.toList());
-
-		return customerDtoList;
 	}
 
 }
