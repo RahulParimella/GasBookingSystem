@@ -118,6 +118,16 @@ public class GasBookingImpl implements GasBookingService{
 		}
 	}
 
+
+
+
+	@Override
+	public List<GasBookingDto> viewAll() {
+		// TODO Auto-generated method stub
+		List<GasBooking> list=bookingRepo.findAll();
+		return list.stream().map(bookings->modelMapper.map(list, GasBookingDto.class)).collect(Collectors.toList());
+	}
+
 	
 
 //	@Override

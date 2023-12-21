@@ -1,7 +1,6 @@
 package com.GasBookingApplication.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.GasBookingApplication.Dto.CustomerDto;
 import com.GasBookingApplication.Model.Customer;
@@ -14,13 +13,12 @@ public interface ICustomerService {
 	
 	String deleteCustomer(int customerId);
 	
-	List<Customer> viewCustomers();
+	List<CustomerDto> viewCustomers();
 	
-
+	//List<Customer> viewCustomers();
 	CustomerDto viewById(int customerId);
 	
 	
 	
-	//Customer validateCustomer(String username,String password);
 	
 }

@@ -16,5 +16,7 @@ public interface GasBookingService {
 	List<GasBookingDto> viewGasBookingById(int customerId);
 
 //	List<GasBookingDto> addMultipleBookings(List<GasBookingDto> gasbookingDto);
+	
+	List<GasBookingDto> viewAll();
 
 }

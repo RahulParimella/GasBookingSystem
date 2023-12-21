@@ -93,6 +93,12 @@ public class GasBookingController {
 		return customerId >0;
 	}
 	
+	@GetMapping("/getAllBookings")
+	public List<GasBookingDto> getBookingsList(){
+		List<GasBookingDto> list=gasbookingService.viewAll();
+		return list;
+	}
+	
 }
 	
 	

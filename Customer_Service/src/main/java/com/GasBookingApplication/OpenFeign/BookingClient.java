@@ -15,4 +15,7 @@ public interface BookingClient {
 	@GetMapping("/viewbookings/{customerId}")
 	//Type1
 	public ResponseEntity<List<GasBookingDto>> viewGasBookingById(@PathVariable int customerId);
+	
+//	@GetMapping("/getAllBookings")
+//	public ResponseEntity<List<GasBookingDto>> getBookingsList(int customerId);
 }

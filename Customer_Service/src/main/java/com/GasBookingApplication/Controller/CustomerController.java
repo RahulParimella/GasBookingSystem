@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.GasBookingApplication.CustomerException.CustomerNotFoundException;
 import com.GasBookingApplication.Dto.CustomerDto;
-import com.GasBookingApplication.Model.Customer;
 import com.GasBookingApplication.Service.ICustomerService;
 
 @RestController
@@ -36,10 +36,15 @@ public class CustomerController {
 
 	}
 
+//	@PutMapping("/updatecustomer/{customerId}")
+//	public ResponseEntity<String> updateCustomer(@PathVariable("customerId")  int customerId, @RequestBody CustomerDto customerDto) {
+//		return ResponseEntity.ok(customerService.updateCustomer(customerId, customerDto));
+//
+//	}
 	@PutMapping("/updatecustomer/{customerId}")
-	public ResponseEntity<String> updateCustomer(@PathVariable int customerId, CustomerDto customerDto) {
-		return ResponseEntity.ok(customerService.updateCustomer(customerId, customerDto));
-
+	public ResponseEntity<String> updateCustomer(@PathVariable("customerId") int customerId, @RequestBody CustomerDto customerDto) {
+	    String result = customerService.updateCustomer(customerId, customerDto);
+	    return ResponseEntity.ok(result);
 	}
 
 	@DeleteMapping("/deletecustomer/{customerId}")
@@ -51,7 +56,7 @@ public class CustomerController {
 	@GetMapping("/viewcustomers")
 	// Type1
 	public ResponseEntity<List<CustomerDto>> viewCustomers() {
-
+ 
 		return ResponseEntity.ok(customerService.viewCustomers().stream()
 				.map(customer -> modelMapper.map(customer, CustomerDto.class)).collect(Collectors.toList()));
 	}

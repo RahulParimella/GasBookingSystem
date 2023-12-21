@@ -12,4 +12,8 @@ public interface CylinderClient {
 	
 	@GetMapping("/viewcylinder/{cylinderId}")
 	public ResponseEntity<CylinderDto> viewById(@PathVariable("cylinderId") int cylinderId);
+	
+//	@GetMapping("/viewcylinders")
+//	//Type1
+//	public ResponseEntity<List<CylinderDto>> viewCylinders();
 }

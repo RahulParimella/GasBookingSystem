@@ -32,24 +32,19 @@ public class CustomerDto {
 	private SurrenderCylinderDto surrenderDto;
 	
 	private List<GasBookingDto> gasbookingDto;
-	
-	
 
 	public CustomerDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CustomerDto(int customerId, @Positive(message = "Account number must be a positive integer") int accountNo,
+	public CustomerDto(@Positive(message = "Account number must be a positive integer") int accountNo,
 			@NotEmpty @Size(min = 2, message = "ifsc should have at least 2 characters") String ifscNo,
-			@NotEmpty @Size(min = 2, message = "pan number should have at least 2 characters") String pan
-			) {
+			@NotEmpty @Size(min = 2, message = "pan number should have at least 2 characters") String pan) {
 		super();
-		this.customerId = customerId;
 		this.accountNo = accountNo;
 		this.ifscNo = ifscNo;
 		this.pan = pan;
-		
 	}
 
 	public int getCustomerId() {
@@ -115,6 +110,8 @@ public class CustomerDto {
 	public void setGasbookingDto(List<GasBookingDto> gasbookingDto) {
 		this.gasbookingDto = gasbookingDto;
 	}
+	
+	
 
 	
 

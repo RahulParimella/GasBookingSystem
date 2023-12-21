@@ -33,9 +33,8 @@ public class Customer {
 	}
 
 
-	public Customer(int customerId, int accountNo, String ifscNo, String pan) {
+	public Customer( int accountNo, String ifscNo, String pan) {
 		super();
-		this.customerId = customerId;
 		this.accountNo = accountNo;
 		this.ifscNo = ifscNo;
 		this.pan = pan;
