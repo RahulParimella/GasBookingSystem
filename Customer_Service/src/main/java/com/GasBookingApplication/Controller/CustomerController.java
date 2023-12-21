@@ -1,7 +1,6 @@
 package com.GasBookingApplication.Controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.GasBookingApplication.CustomerException.CustomerNotFoundException;
 import com.GasBookingApplication.Dto.CustomerDto;
-import com.GasBookingApplication.Model.Customer;
 import com.GasBookingApplication.Service.ICustomerService;
 
 @RestController
@@ -48,12 +47,14 @@ public class CustomerController {
 
 	}
 
-	@GetMapping("/viewcustomers")
-	// Type1
+	@GetMapping("/view")
 	public ResponseEntity<List<CustomerDto>> viewCustomers() {
-
-		return ResponseEntity.ok(customerService.viewCustomers().stream()
-				.map(customer -> modelMapper.map(customer, CustomerDto.class)).collect(Collectors.toList()));
+		try {
+			List<CustomerDto> customerDtoList = customerService.viewCustomers();
+			return new ResponseEntity<>(customerDtoList, HttpStatus.OK);
+		} catch (CustomerNotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@GetMapping("/viewcustomer/{customerId}")
