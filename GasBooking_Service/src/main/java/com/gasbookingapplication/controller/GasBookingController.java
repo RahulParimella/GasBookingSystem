@@ -70,7 +70,7 @@ public class GasBookingController {
 	}
 
 	@GetMapping("/viewbookings/{customerId}")
-	public ResponseEntity<GasBookingDto> viewById(@PathVariable("cylinderId") int customerId) {
+	public ResponseEntity<GasBookingDto> viewById(@PathVariable("customerId") int customerId) {
 		if (isValid(customerId)) {
 			return ResponseEntity.ok(gasbookingService.viewGasBookingById(customerId));
 		} else {

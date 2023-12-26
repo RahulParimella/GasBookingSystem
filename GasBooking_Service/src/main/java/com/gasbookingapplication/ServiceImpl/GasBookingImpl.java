@@ -1,16 +1,17 @@
 package com.gasbookingapplication.ServiceImpl;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.gasbookingapplication.Exception.BookingNotFoundException;
 import com.gasbookingapplication.Service.GasBookingService;
+import com.gasbookingapplication.dto.CustomerDto;
 import com.gasbookingapplication.dto.GasBookingDto;
+import com.gasbookingapplication.feign.CustomerClient;
 import com.gasbookingapplication.model.GasBooking;
 import com.gasbookingapplication.repository.GasBookingRepository;
 
@@ -23,8 +24,8 @@ public class GasBookingImpl implements GasBookingService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	
-
+	@Autowired
+	private CustomerClient customerClient;
 	@Override
 	public GasBookingDto insertGasBooking(GasBookingDto gasbookingDto) {
 		// TODO Auto-generated method stub
@@ -71,6 +72,10 @@ public class GasBookingImpl implements GasBookingService {
 		if (gasbookings.isPresent()) {
 			GasBooking gb = gasbookings.get();
 			GasBookingDto gasbookingDto = modelMapper.map(gasbookings, GasBookingDto.class);
+			//for customer
+			ResponseEntity<CustomerDto> customerResponseEntity =customerClient.viewCustomerById(customerId);
+			CustomerDto customerDto = customerResponseEntity.getBody();
+			gasbookingDto.setCustomerDto(customerDto);
 			return gasbookingDto;
 
 		} else {
@@ -87,6 +92,10 @@ public class GasBookingImpl implements GasBookingService {
 			GasBooking b = bookings.get();
 			GasBookingDto gasbookingDto = modelMapper.map(bookings, GasBookingDto.class);
 
+			//for customer
+			ResponseEntity<CustomerDto> customerResponseEntity =customerClient.viewCustomerById(customerId);
+			CustomerDto customerDto = customerResponseEntity.getBody();
+			gasbookingDto.setCustomerDto(customerDto);
 			
 			return gasbookingDto;
 

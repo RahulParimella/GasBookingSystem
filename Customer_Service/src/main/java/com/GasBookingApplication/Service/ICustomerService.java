@@ -8,17 +8,13 @@ import com.GasBookingApplication.Model.Customer;
 public interface ICustomerService {
 
 	CustomerDto insertCustomer(CustomerDto customerDto);
-	
-	String updateCustomer(int customerId,CustomerDto customerDto);
-	
+
+	String updateCustomer(int customerId, CustomerDto customerDto);
+
 	String deleteCustomer(int customerId);
-	
-	List<CustomerDto> viewCustomers();
-	
+
+	List<Customer> viewCustomers();
 	
 	CustomerDto viewCustomerById(int customerId);
-	
-	
-	
-	
+
 }

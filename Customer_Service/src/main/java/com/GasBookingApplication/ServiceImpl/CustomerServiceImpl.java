@@ -2,7 +2,6 @@ package com.GasBookingApplication.ServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,6 @@ public class CustomerServiceImpl implements ICustomerService {
 	private CylinderClient cylinderClient;
 	@Autowired
 	private BankClient bankClient;
-
 
 	@Override
 	public CustomerDto insertCustomer(CustomerDto customerDto) {
@@ -91,8 +89,6 @@ public class CustomerServiceImpl implements ICustomerService {
 			ResponseEntity<BankDto> bankResponseEntity = bankClient.viewById(customerId);
 			BankDto bankDto = bankResponseEntity.getBody();
 			customerDto.setBankDto(bankDto);
-	
-			
 
 			return customerDto;
 		} else {
@@ -101,20 +97,15 @@ public class CustomerServiceImpl implements ICustomerService {
 		}
 	}
 
-	// I should complete this
+
 	@Override
-	public List<CustomerDto> viewCustomers() {
-		List<Customer> customers = customerRepo.findAll();
-
-		if (customers.isEmpty()) {
-			throw new CustomerNotFoundException("Hey, the customer list is empty");
+	public List<Customer> viewCustomers() {
+		// TODO Auto-generated method stub
+		List<Customer> customers=customerRepo.findAll();
+		if(customers.isEmpty()) {
+			throw new CustomerNotFoundException("hey list is empty");
 		}
-
-		// Use ModelMapper to map List<Customer> to List<CustomerDto>
-		List<CustomerDto> customerDtoList = customers.stream()
-				.map(customer -> modelMapper.map(customer, CustomerDto.class)).collect(Collectors.toList());
-		
-		return customerDtoList;
+		return customers;
 	}
 
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.GasBookingApplication.CustomerException.CustomerNotFoundException;
 import com.GasBookingApplication.Dto.CustomerDto;
+import com.GasBookingApplication.Dto.CylinderDto;
 import com.GasBookingApplication.Service.ICustomerService;
 
 @RestController
@@ -49,7 +50,7 @@ public class CustomerController {
 
 	}
 
-	@GetMapping("/viewcustomers")
+	@GetMapping("/viewallcustomers")
 	// Type1
 	public ResponseEntity<List<CustomerDto>> viewCustomers() {
 
