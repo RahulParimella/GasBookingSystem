@@ -22,22 +22,23 @@ public class CylinderDto {
 	@NotEmpty
 	private float price;
 
-	public CylinderDto(int cylinderid,
-			@NotEmpty @Size(min = 2, message = "Type should have at least 2 characters") String type,
-			@NotEmpty float weight,
-			@NotEmpty @Size(min = 2, message = "strapcolor should have at least 2 characters") String strapColor,
-			@NotEmpty float price) {
-		super();
-		this.cylinderid = cylinderid;
-		this.type = type;
-		this.weight = weight;
-		this.strapColor = strapColor;
-		this.price = price;
-	}
+	private int customerId;
 
 	public CylinderDto() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public CylinderDto(@NotEmpty @Size(min = 2, message = "Type should have at least 2 characters") String type,
+			@NotEmpty float weight,
+			@NotEmpty @Size(min = 2, message = "strapcolor should have at least 2 characters") String strapColor,
+			@NotEmpty float price, int customerId) {
+		super();
+		this.type = type;
+		this.weight = weight;
+		this.strapColor = strapColor;
+		this.price = price;
+		this.customerId = customerId;
 	}
 
 	public int getCylinderid() {
@@ -80,10 +81,12 @@ public class CylinderDto {
 		this.price = price;
 	}
 
-	@Override
-	public String toString() {
-		return "CylinderDto [cylinderid=" + cylinderid + ", type=" + type + ", weight=" + weight + ", strapColor="
-				+ strapColor + ", price=" + price + "]";
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 }

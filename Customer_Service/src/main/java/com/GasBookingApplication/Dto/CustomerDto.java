@@ -1,7 +1,5 @@
 package com.GasBookingApplication.Dto;
 
-import java.util.List;
-
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -24,24 +22,21 @@ public class CustomerDto {
 
 	private String pan;
 
-	
 	private CylinderDto cylinderDto;
 
 	private BankDto bankDto;
-	
-	private SurrenderCylinderDto surrenderDto;
-	
-	private List<GasBookingDto> gasbookingDto;
 
+	
 	public CustomerDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CustomerDto(@Positive(message = "Account number must be a positive integer") int accountNo,
+	public CustomerDto(int customerId, @Positive(message = "Account number must be a positive integer") int accountNo,
 			@NotEmpty @Size(min = 2, message = "ifsc should have at least 2 characters") String ifscNo,
 			@NotEmpty @Size(min = 2, message = "pan number should have at least 2 characters") String pan) {
 		super();
+		this.customerId = customerId;
 		this.accountNo = accountNo;
 		this.ifscNo = ifscNo;
 		this.pan = pan;
@@ -94,24 +89,6 @@ public class CustomerDto {
 	public void setBankDto(BankDto bankDto) {
 		this.bankDto = bankDto;
 	}
-
-	public SurrenderCylinderDto getSurrenderDto() {
-		return surrenderDto;
-	}
-
-	public void setSurrenderDto(SurrenderCylinderDto surrenderDto) {
-		this.surrenderDto = surrenderDto;
-	}
-
-	public List<GasBookingDto> getGasbookingDto() {
-		return gasbookingDto;
-	}
-
-	public void setGasbookingDto(List<GasBookingDto> gasbookingDto) {
-		this.gasbookingDto = gasbookingDto;
-	}
-	
-	
 
 	
 

@@ -22,7 +22,7 @@ public class CylinderDto {
 	@NotEmpty
 	private float price;
 
-	
+
 	
 	public CylinderDto(int cylinderid,
 			@NotEmpty @Size(min = 2, message = "Type should have at least 2 characters") String type,
@@ -82,8 +82,6 @@ public class CylinderDto {
 		this.price = price;
 	}
 
-
-	
 
 	@Override
 	public String toString() {

@@ -13,13 +13,9 @@ import com.GasBookingApplication.CustomerException.CustomerNotFoundException;
 import com.GasBookingApplication.Dto.BankDto;
 import com.GasBookingApplication.Dto.CustomerDto;
 import com.GasBookingApplication.Dto.CylinderDto;
-import com.GasBookingApplication.Dto.GasBookingDto;
-import com.GasBookingApplication.Dto.SurrenderCylinderDto;
 import com.GasBookingApplication.Model.Customer;
 import com.GasBookingApplication.OpenFeign.BankClient;
-import com.GasBookingApplication.OpenFeign.BookingClient;
 import com.GasBookingApplication.OpenFeign.CylinderClient;
-import com.GasBookingApplication.OpenFeign.SurrenderClient;
 import com.GasBookingApplication.Repository.CustomerRepository;
 import com.GasBookingApplication.Service.ICustomerService;
 
@@ -36,11 +32,6 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Autowired
 	private BankClient bankClient;
 
-	@Autowired
-	private SurrenderClient surrenderClient;
-
-	@Autowired
-	private BookingClient bookingClient;
 
 	@Override
 	public CustomerDto insertCustomer(CustomerDto customerDto) {
@@ -52,17 +43,16 @@ public class CustomerServiceImpl implements ICustomerService {
 		return customerDto1;
 	}
 
-
 	@Override
-    public String updateCustomer(int customerId, CustomerDto customerDto) {
-        Optional<Customer> cy = customerRepo.findById(customerId);
+	public String updateCustomer(int customerId, CustomerDto customerDto) {
+		Optional<Customer> cy = customerRepo.findById(customerId);
 
-        if (cy.isPresent()) {
+		if (cy.isPresent()) {
 			Customer updateCustomer = cy.get();
 			updateCustomer.setAccountNo(customerDto.getAccountNo());
 			updateCustomer.setIfscNo(customerDto.getIfscNo());
 			updateCustomer.setPan(customerDto.getPan());
-			//updateCustomer.setCustomerId(customerDto.getCustomerId());
+			// updateCustomer.setCustomerId(customerDto.getCustomerId());
 
 			customerRepo.save(updateCustomer);
 			return "customer with ID " + customerId + " updated successfully";
@@ -70,7 +60,7 @@ public class CustomerServiceImpl implements ICustomerService {
 		} else {
 			throw new CustomerNotFoundException("customerId id not found:" + customerId);
 		}
-    }
+	}
 
 	@Override
 	public String deleteCustomer(int customerId) {
@@ -87,7 +77,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public CustomerDto viewById(int customerId) {
+	public CustomerDto viewCustomerById(int customerId) {
 		// TODO Auto-generated method stub
 		Optional<Customer> customer = customerRepo.findById(customerId);
 		if (customer.isPresent()) {
@@ -101,15 +91,8 @@ public class CustomerServiceImpl implements ICustomerService {
 			ResponseEntity<BankDto> bankResponseEntity = bankClient.viewById(customerId);
 			BankDto bankDto = bankResponseEntity.getBody();
 			customerDto.setBankDto(bankDto);
-			// for surrender cylinder
-			ResponseEntity<SurrenderCylinderDto> surrenderResponseEntity = surrenderClient.viewById(customerId);
-			SurrenderCylinderDto surrenderDto = surrenderResponseEntity.getBody();
-			customerDto.setSurrenderDto(surrenderDto);
-
-			// for bookings
-			ResponseEntity<List<GasBookingDto>> bookingResponseEntity = bookingClient.viewGasBookingById(customerId);
-			List<GasBookingDto> bookingDto = bookingResponseEntity.getBody();
-			customerDto.setGasbookingDto(bookingDto);
+	
+			
 
 			return customerDto;
 		} else {
@@ -118,6 +101,7 @@ public class CustomerServiceImpl implements ICustomerService {
 		}
 	}
 
+	// I should complete this
 	@Override
 	public List<CustomerDto> viewCustomers() {
 		List<Customer> customers = customerRepo.findAll();

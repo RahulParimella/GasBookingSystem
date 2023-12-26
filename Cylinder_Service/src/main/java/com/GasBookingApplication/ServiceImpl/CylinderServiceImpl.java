@@ -91,7 +91,7 @@ public class CylinderServiceImpl implements ICylinderService {
 
 
 	@Override
-	public CylinderDto viewById(int cylinderid) {
+	public CylinderDto viewCylinderById(int cylinderid) {
 		// TODO Auto-generated method stub
 		Optional<Cylinder> cylinder =cylinderRepo.findById(cylinderid);
 		if(cylinder.isPresent()) {

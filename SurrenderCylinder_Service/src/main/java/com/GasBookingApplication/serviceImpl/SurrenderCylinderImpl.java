@@ -9,35 +9,38 @@ import org.springframework.stereotype.Service;
 
 import com.GasBookingApplication.Exception.SurrenderCylinderNotFoundException;
 import com.GasBookingApplication.Repository.SurrenderRepository;
+import com.GasBookingApplication.dto.CustomerDto;
 import com.GasBookingApplication.dto.CylinderDto;
 import com.GasBookingApplication.dto.SurrenderCylinderDto;
 import com.GasBookingApplication.model.SurrenderCylinder;
+import com.GasBookingApplication.openFeign.CustomerClient;
 import com.GasBookingApplication.openFeign.CylinderClient;
 import com.GasBookingApplication.service.ISurrenderCylinderService;
 
 @Service
-public class SurrenderCylinderImpl implements ISurrenderCylinderService{
-	
+public class SurrenderCylinderImpl implements ISurrenderCylinderService {
+
 	@Autowired
 	private SurrenderRepository surrenderRepo;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Autowired
 	private CylinderClient cylinderClient;
-	
-//	@Autowired
-//	private CustomerClient customerClient;
-	
+
+	@Autowired
+	private CustomerClient customerClient;
+
 	@Override
 	public SurrenderCylinderDto insertSurrenderCylinder(SurrenderCylinderDto surrenderCylinderDto) {
 		// TODO Auto-generated method stub
 		SurrenderCylinder surrenderCylinder = modelMapper.map(surrenderCylinderDto, SurrenderCylinder.class);
-		SurrenderCylinder savedsurrenderCylinder=surrenderRepo.save(surrenderCylinder);
-		SurrenderCylinderDto surrendercylinderDto1=modelMapper.map(savedsurrenderCylinder, SurrenderCylinderDto.class);
+		SurrenderCylinder savedsurrenderCylinder = surrenderRepo.save(surrenderCylinder);
+		SurrenderCylinderDto surrendercylinderDto1 = modelMapper.map(savedsurrenderCylinder,
+				SurrenderCylinderDto.class);
 		return surrendercylinderDto1;
-		
+
 	}
 
 	@Override
@@ -59,39 +62,36 @@ public class SurrenderCylinderImpl implements ISurrenderCylinderService{
 	@Override
 	public String deleteSurrenderCylinder(int surrenderId) {
 		// TODO Auto-generated method stub
-		Optional<SurrenderCylinder> c=surrenderRepo.findById(surrenderId);
-		if(c.isPresent()) {
-			
+		Optional<SurrenderCylinder> c = surrenderRepo.findById(surrenderId);
+		if (c.isPresent()) {
+
 			surrenderRepo.delete(c.get());
 			return "deleted successfully";
-		}
-		else {
-			throw new SurrenderCylinderNotFoundException("Cylinder with"+surrenderId+ "not found");
+		} else {
+			throw new SurrenderCylinderNotFoundException("Cylinder with" + surrenderId + "not found");
 		}
 	}
 
 	@Override
-	public SurrenderCylinderDto viewById(int surrenderId) {
+	public SurrenderCylinderDto viewSurrenderCylinderById(int surrenderId) {
 		// TODO Auto-generated method stub
-		Optional<SurrenderCylinder> surrendercylinder =surrenderRepo.findById(surrenderId);
-		if(surrendercylinder.isPresent()) {
-			SurrenderCylinder c=surrendercylinder.get();
-			SurrenderCylinderDto surrendercylinderDto =modelMapper.map(surrendercylinder, SurrenderCylinderDto.class);
+		Optional<SurrenderCylinder> surrendercylinder = surrenderRepo.findById(surrenderId);
+		if (surrendercylinder.isPresent()) {
+			SurrenderCylinder c = surrendercylinder.get();
+			SurrenderCylinderDto surrendercylinderDto = modelMapper.map(surrendercylinder, SurrenderCylinderDto.class);
 			// for cylinder
-						ResponseEntity<CylinderDto> cylinderResponseEntity =cylinderClient.viewById(surrenderId);
-						CylinderDto cylDto =cylinderResponseEntity.getBody();
-						surrendercylinderDto.setCylinderDto(cylDto);
-						
-			
-						 //for customer
-//						ResponseEntity<CustomerDto> customerResponseEntity =customerClient.viewCustomerById(surrenderId);
-//						CustomerDto custDto =customerResponseEntity.getBody();
-//						surrendercylinderDto.setCustomerDto(custDto);
+			ResponseEntity<CylinderDto> cylinderResponseEntity = cylinderClient.viewById(surrenderId);
+			CylinderDto cylDto = cylinderResponseEntity.getBody();
+			surrendercylinderDto.setCylinderDto(cylDto);
+
+			// for customer
+						ResponseEntity<CustomerDto> customerResponseEntity =customerClient.viewCustomerById(surrenderId);
+						CustomerDto custDto =customerResponseEntity.getBody();
+						surrendercylinderDto.setCustomerDto(custDto);
 			return surrendercylinderDto;
 
-		}
-		else {
-			throw new SurrenderCylinderNotFoundException("surrenderId id not found:"+surrenderId);
+		} else {
+			throw new SurrenderCylinderNotFoundException("surrenderId id not found:" + surrenderId);
 
 		}
 	}

@@ -17,7 +17,7 @@ public interface ICylinderService {
 	
 	List<Cylinder> viewCylinderByType(String type);
 	
-	CylinderDto viewById(int cylinderid);
+	CylinderDto viewCylinderById(int cylinderid);
 
 	
 }

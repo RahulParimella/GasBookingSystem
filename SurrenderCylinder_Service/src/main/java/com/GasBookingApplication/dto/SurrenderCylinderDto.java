@@ -10,10 +10,21 @@ public class SurrenderCylinderDto {
 
 	@NotNull(message = "Date cannot be null")
 	private LocalDate surrenderDate;
-
-	private CylinderDto cylinderDto;
 	
-	//private CustomerDto customerDto;
+//	
+	private CustomerDto customerDto;
+	
+	private CylinderDto cylinderDto;
+
+	public SurrenderCylinderDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public SurrenderCylinderDto(@NotNull(message = "Date cannot be null") LocalDate surrenderDate) {
+		super();
+		this.surrenderDate = surrenderDate;
+	}
 
 	public int getSurrenderId() {
 		return surrenderId;
@@ -31,6 +42,14 @@ public class SurrenderCylinderDto {
 		this.surrenderDate = surrenderDate;
 	}
 
+	public CustomerDto getCustomerDto() {
+		return customerDto;
+	}
+
+	public void setCustomerDto(CustomerDto customerDto) {
+		this.customerDto = customerDto;
+	}
+
 	public CylinderDto getCylinderDto() {
 		return cylinderDto;
 	}
@@ -38,12 +57,10 @@ public class SurrenderCylinderDto {
 	public void setCylinderDto(CylinderDto cylinderDto) {
 		this.cylinderDto = cylinderDto;
 	}
-//
-//	public CustomerDto getCustomerDto() {
-//		return customerDto;
-//	}
-//
-//	public void setCustomerDto(CustomerDto customerDto) {
-//		this.customerDto = customerDto;
-//	}
+	
+	
+
+
+	
+	
 }

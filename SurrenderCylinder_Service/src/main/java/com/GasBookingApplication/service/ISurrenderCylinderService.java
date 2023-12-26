@@ -11,6 +11,6 @@ public interface ISurrenderCylinderService {
 	
 	String deleteSurrenderCylinder(int surrenderId);
 	
-	SurrenderCylinderDto viewById(int surrenderId);
+	SurrenderCylinderDto viewSurrenderCylinderById(int surrenderId);
 	
 }

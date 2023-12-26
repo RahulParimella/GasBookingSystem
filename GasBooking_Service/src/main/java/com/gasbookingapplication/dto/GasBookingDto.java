@@ -10,17 +10,6 @@ public class GasBookingDto {
 	private boolean status;
 
 	private float bill;
-	
-	private CustomerDto customerDto;
-	
-
-	public CustomerDto getCustomerDto() {
-		return customerDto;
-	}
-
-	public void setCustomerDto(CustomerDto customerDto) {
-		this.customerDto = customerDto;
-	}
 
 	public int getGasbookingId() {
 		return gasbookingId;
@@ -54,8 +43,4 @@ public class GasBookingDto {
 		this.bill = bill;
 	}
 
-	
-
-	
-	
 }

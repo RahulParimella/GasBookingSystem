@@ -84,7 +84,7 @@ public class CylinderController {
 	@GetMapping("/viewcylinder/{cylinderId}")
 	public ResponseEntity<CylinderDto> viewById(@PathVariable("cylinderId") int cylinderId) {
 		if (isValidCylinderId(cylinderId)) {
-			return ResponseEntity.ok(Cylinderservice.viewById(cylinderId));
+			return ResponseEntity.ok(Cylinderservice.viewCylinderById(cylinderId));
 		} else {
 			return ResponseEntity.badRequest().build(); // You can customize the response accordingly
 

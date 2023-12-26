@@ -6,18 +6,16 @@ import jakarta.validation.constraints.Size;
 
 public class BankDto {
 
-    private int bankId;
-    @NotEmpty
+	private int bankId;
+	@NotEmpty
 	@Size(min = 2, message = "bankname should have at least 2 characters")
-	@Column(name="bankname")
+	@Column(name = "bankname")
 	private String bankName;
 
 	@NotEmpty
 	@Size(min = 2, message = "bankname should have at least 2 characters")
 	@Column(name = "bankaddress")
 	private String address;
-
-
 
 	public BankDto(int bankId,
 			@NotEmpty @Size(min = 2, message = "bankname should have at least 2 characters") String bankName,
@@ -56,8 +54,5 @@ public class BankDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
 
-
-	
 }

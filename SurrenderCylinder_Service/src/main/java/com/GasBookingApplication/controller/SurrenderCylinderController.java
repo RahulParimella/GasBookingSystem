@@ -18,32 +18,35 @@ import com.GasBookingApplication.service.ISurrenderCylinderService;
 @RestController
 @RequestMapping("/api")
 public class SurrenderCylinderController {
-	
+
 	@Autowired
 	private ISurrenderCylinderService surrenderService;
-	
-	@PostMapping("/surrendercylinder")
-	public ResponseEntity<SurrenderCylinderDto> insertSurrenderCylinder(@RequestBody SurrenderCylinderDto surrenderCylinderDto){
-		
-		return new ResponseEntity<>(surrenderService.insertSurrenderCylinder(surrenderCylinderDto),HttpStatus.CREATED);
-		
-	}
-	
 
-	@PutMapping("/updatesurrendercylinder/{surrenderid}")
-	public ResponseEntity<String> updateSurrenderCylinder(@PathVariable int surrenderId ,SurrenderCylinderDto surrenderCylinderDto) {
-		return ResponseEntity.ok(surrenderService.updateSurrenderCylinder(surrenderId, surrenderCylinderDto));
+	@PostMapping("/surrendercylinder")
+	public ResponseEntity<SurrenderCylinderDto> insertSurrenderCylinder(
+			@RequestBody SurrenderCylinderDto surrenderCylinderDto) {
+
+		return new ResponseEntity<>(surrenderService.insertSurrenderCylinder(surrenderCylinderDto), HttpStatus.CREATED);
+
 	}
-	
+
+	@PutMapping("/updatesurrendercylinder/{surrenderId}")
+	public ResponseEntity<String> updateSurrenderCylinder(@PathVariable int surrenderId,
+			@RequestBody SurrenderCylinderDto surrenderCylinderDto) {
+		String result = surrenderService.updateSurrenderCylinder(surrenderId, surrenderCylinderDto);
+		return ResponseEntity.ok(result);
+	}
+
 	@DeleteMapping("/deletesurrendercylinder/{surrenderid}")
-	public ResponseEntity<String> deleteSurrenderCylinder(@PathVariable int surrenderId) {
-		
-		return ResponseEntity.ok( surrenderService.deleteSurrenderCylinder(surrenderId));
+	public ResponseEntity<String> deleteSurrenderCylinder(@PathVariable("surrenderid") int surrenderId) {
+
+		return ResponseEntity.ok(surrenderService.deleteSurrenderCylinder(surrenderId));
 	}
+
 	@GetMapping("/viewsurrenderdcylinder/{surrenderid}")
 	public ResponseEntity<SurrenderCylinderDto> viewById(@PathVariable("surrenderid") int surrenderId) {
 		if (isValidSurrenderId(surrenderId)) {
-			return ResponseEntity.ok(surrenderService.viewById(surrenderId));
+			return ResponseEntity.ok(surrenderService.viewSurrenderCylinderById(surrenderId));
 		} else {
 			return ResponseEntity.badRequest().build(); // You can customize the response accordingly
 

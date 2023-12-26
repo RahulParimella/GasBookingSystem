@@ -1,8 +1,6 @@
 package com.gasbookingapplication.controller;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,34 +23,35 @@ import com.gasbookingapplication.dto.GasBookingDto;
 public class GasBookingController {
 	@Autowired
 	private GasBookingService gasbookingService;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@PostMapping("/booking")
-	public ResponseEntity<GasBookingDto>  insertGasBooking(@RequestBody GasBookingDto gasbookingDto){
-		return new ResponseEntity<>(gasbookingService.insertGasBooking(gasbookingDto),HttpStatus.CREATED);
-		
+	public ResponseEntity<GasBookingDto> insertGasBooking(@RequestBody GasBookingDto gasbookingDto) {
+		return new ResponseEntity<>(gasbookingService.insertGasBooking(gasbookingDto), HttpStatus.CREATED);
+
 	}
-	
+
 //	@PostMapping("/add-multiple-bookings")
 //	public ResponseEntity<List<GasBookingDto>> addMultipleBookings(@RequestBody List<GasBookingDto> gasbookingDtoList) {
 //	    List<GasBookingDto> savedBookings = gasbookingService.addMultipleBookings(gasbookingDtoList);
 //	    return new ResponseEntity<>(savedBookings, HttpStatus.CREATED);
 //	}
 
-	
 	@PutMapping("/updatebooking/{bookingid}")
-	public ResponseEntity<String> updateGasBooking(@PathVariable ("bookingid") int gasbookingId,@RequestBody GasBookingDto gasbookingDto){
+	public ResponseEntity<String> updateGasBooking(@PathVariable("bookingid") int gasbookingId,
+			@RequestBody GasBookingDto gasbookingDto) {
 		return ResponseEntity.ok(gasbookingService.updateGasBooking(gasbookingId, gasbookingDto));
-		
+
 	}
+
 	@DeleteMapping("/deletebooking/{bookingid}")
-	public ResponseEntity<String> deleteGasBooking(@PathVariable ("bookingid") int gasbookingId ){
+	public ResponseEntity<String> deleteGasBooking(@PathVariable("bookingid") int gasbookingId) {
 		return ResponseEntity.ok(gasbookingService.deleteGasBooking(gasbookingId));
-		
+
 	}
-	
+
 	@GetMapping("/getBill/{customerId}")
 	public ResponseEntity<GasBookingDto> getBill(@PathVariable("customerId") int customerId) {
 		if (isValidCustomerId(customerId)) {
@@ -69,40 +68,24 @@ public class GasBookingController {
 		// For example, check if customerId is positive or some other condition
 		return customerId > 0;
 	}
-	
-	
-	
-	
+
 	@GetMapping("/viewbookings/{customerId}")
-	//Type1
-	public ResponseEntity<List<GasBookingDto>> viewGasBookingById(@PathVariable ("customerId") int customerId){
+	public ResponseEntity<GasBookingDto> viewById(@PathVariable("cylinderId") int customerId) {
 		if (isValid(customerId)) {
-		return ResponseEntity.ok(gasbookingService.viewGasBookingById(customerId).stream()
-				.map(gas->modelMapper.map(gas, GasBookingDto.class))
-				.collect(Collectors.toList()));
-		}else {
-	        return ResponseEntity.badRequest().body(Collections.emptyList()); // You can customize the response accordingly
+			return ResponseEntity.ok(gasbookingService.viewGasBookingById(customerId));
+		} else {
+			return ResponseEntity.badRequest().build(); // You can customize the response accordingly
 
 		}
-		
+
 	}
-	
+
 	private boolean isValid(int customerId) {
-	    // Add your condition for a valid 'type' here
-	    // For example, check if it's not null and not empty
-		return customerId >0;
+		// Add your condition for a valid 'type' here
+		// For example, check if it's not null and not empty
+		return customerId > 0;
 	}
-	
-	@GetMapping("/getAllBookings")
-	public List<GasBookingDto> getBookingsList(){
-		List<GasBookingDto> list=gasbookingService.viewAll();
-		return list;
-	}
-	
-}
-	
-	
-	
-	
 
 	
+
+}

@@ -15,8 +15,8 @@ public interface ICustomerService {
 	
 	List<CustomerDto> viewCustomers();
 	
-	//List<Customer> viewCustomers();
-	CustomerDto viewById(int customerId);
+	
+	CustomerDto viewCustomerById(int customerId);
 	
 	
 	

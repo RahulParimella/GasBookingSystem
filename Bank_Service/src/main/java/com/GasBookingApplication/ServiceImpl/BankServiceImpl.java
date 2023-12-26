@@ -67,15 +67,16 @@ public class BankServiceImpl implements IBankService{
 		}
 	}
 	
-	@Override
-	public List<Bank> viewBanks() {
-		// TODO Auto-generated method stub
-		List<Bank> cylinders=bankRepo.findAll();
-		if(cylinders.isEmpty()) {
-			throw new BankNotFoundException("hey list is empty");
-		}
-		return cylinders;
-	}
+//	@Override
+//	public List<Bank> viewBanks() {
+//		// TODO Auto-generated method stub
+//		List<Bank> cylinders=bankRepo.findAll();
+//		if(cylinders.isEmpty()) {
+//			throw new BankNotFoundException("hey list is empty");
+//		}
+//		return cylinders;
+//	}
+
 	@Override
 	public BankDto viewById(int bankId) {
 		// TODO Auto-generated method stub

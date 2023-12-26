@@ -36,15 +36,11 @@ public class CustomerController {
 
 	}
 
-//	@PutMapping("/updatecustomer/{customerId}")
-//	public ResponseEntity<String> updateCustomer(@PathVariable("customerId")  int customerId, @RequestBody CustomerDto customerDto) {
-//		return ResponseEntity.ok(customerService.updateCustomer(customerId, customerDto));
-//
-//	}
 	@PutMapping("/updatecustomer/{customerId}")
-	public ResponseEntity<String> updateCustomer(@PathVariable("customerId") int customerId, @RequestBody CustomerDto customerDto) {
-	    String result = customerService.updateCustomer(customerId, customerDto);
-	    return ResponseEntity.ok(result);
+	public ResponseEntity<String> updateCustomer(@PathVariable("customerId") int customerId,
+			@RequestBody CustomerDto customerDto) {
+		String result = customerService.updateCustomer(customerId, customerDto);
+		return ResponseEntity.ok(result);
 	}
 
 	@DeleteMapping("/deletecustomer/{customerId}")
@@ -56,7 +52,7 @@ public class CustomerController {
 	@GetMapping("/viewcustomers")
 	// Type1
 	public ResponseEntity<List<CustomerDto>> viewCustomers() {
- 
+
 		return ResponseEntity.ok(customerService.viewCustomers().stream()
 				.map(customer -> modelMapper.map(customer, CustomerDto.class)).collect(Collectors.toList()));
 	}
@@ -64,7 +60,7 @@ public class CustomerController {
 	@GetMapping("/viewcustomer/{customerId}")
 	public ResponseEntity<CustomerDto> viewCustomerById(@PathVariable int customerId) {
 		if (isValidCustomerId(customerId)) {
-			return ResponseEntity.ok(customerService.viewById(customerId));
+			return ResponseEntity.ok(customerService.viewCustomerById(customerId));
 		} else {
 			return ResponseEntity.badRequest().build(); // You can customize the response accordingly
 

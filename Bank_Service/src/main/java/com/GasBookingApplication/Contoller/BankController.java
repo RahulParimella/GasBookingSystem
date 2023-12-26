@@ -22,45 +22,33 @@ import com.GasBookingApplication.Service.IBankService;
 @RestController
 @RequestMapping("/api")
 public class BankController {
-	
+
 	@Autowired
 	private IBankService bankService;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@PostMapping("/bank")
 	public ResponseEntity<BankDto> insertCylinder(@RequestBody BankDto bankDto) {
-		
-		 return new ResponseEntity<>(bankService.insertBank(bankDto), HttpStatus.CREATED);	
-	
+
+		return new ResponseEntity<>(bankService.insertBank(bankDto), HttpStatus.CREATED);
+
 	}
-	
+
 	@PutMapping("/updatebank/{bankId}")
-	public ResponseEntity<String> updateBank(@PathVariable int bankId,@RequestBody BankDto bankDto ){
+	public ResponseEntity<String> updateBank(@PathVariable int bankId, @RequestBody BankDto bankDto) {
 		return ResponseEntity.ok(bankService.updateBank(bankId, bankDto));
-	
-		
+
 	}
-	
+
 	@DeleteMapping("/deletebank/{bankId}")
-	public ResponseEntity<String> deleteBank(@PathVariable int bankId ){
-		
-		return  ResponseEntity.ok(bankService.deleteBank(bankId));
-		
+	public ResponseEntity<String> deleteBank(@PathVariable int bankId) {
+
+		return ResponseEntity.ok(bankService.deleteBank(bankId));
+
 	}
-	
-	@GetMapping("/viewbanks")
-	//Type1
-	public ResponseEntity<List<BankDto>> viewBanks(){
-		
-		return ResponseEntity.ok(bankService.viewBanks().stream()
-				.map(bank->modelMapper.map(bank, BankDto.class))
-				.collect(Collectors.toList()));
-	}
-	
-	
-	
+
 	@GetMapping("/viewbank/{bankId}")
 	public ResponseEntity<BankDto> viewById(@PathVariable("bankId") int bankId) {
 		if (isValidBankId(bankId)) {
@@ -77,5 +65,5 @@ public class BankController {
 		// For example, check if customerId is positive or some other condition
 		return bankId > 0;
 	}
-	
+
 }
